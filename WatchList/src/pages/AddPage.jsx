@@ -11,7 +11,7 @@ const AddPage = () => {
     setQuery(event.target.value);
 
     fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=6cc5a3f023054b5c1b1cda12c20e3c10&language=en-US&page=1&include_adult=false&query=${event.target.value}`
+      `https://api.themoviedb.org/3/search/movie?api_key=APIKEY&language=en-US&page=1&include_adult=false&query=${event.target.value}`
     ).then((res) => res.json())
     .then((data) => {
       if(!data.errors) {
