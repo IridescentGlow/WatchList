@@ -1,11 +1,58 @@
-import React from 'react'
+import React, { useState } from "react";
+import Navigation from "./Navigation";
+import { ResultCard } from "./ResultCard";
 
 const AddPage = () => {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+   
+  const onChange = (event) => {
+    event.preventDefault();
+    setQuery(event.target.value);
+
+    fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=6cc5a3f023054b5c1b1cda12c20e3c10&language=en-US&page=1&include_adult=false&query=${event.target.value}`
+    ).then((res) => res.json())
+    .then((data) => {
+      if(!data.errors) {
+        setResults(data.results);
+      }else {
+        setResults([]);
+      }
+    })
+  };
+
   return (
     <div>
-      <h1>Add Page</h1>
-    </div>
-  )
-}
+      <header>
+        <Navigation />
+      </header>
+      <div className="add-page">
+        <div className="container">
+          <div className="add-content">
+            <div className="input-wrapper">
+              <input
+                type="text"
+                placeholder="Search for a movie"
+                value={query}
+                onChange={onChange}
+              />
+            </div>
 
-export default AddPage
+            {results.length > 0 && (
+              <ul className="results">
+              {results.map((movie) => (
+                <li key={movie.id}>
+                  <ResultCard movie={movie} />
+                </li>
+              ))}
+            </ul>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AddPage;

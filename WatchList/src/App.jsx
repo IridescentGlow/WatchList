@@ -3,24 +3,34 @@ import AddPage from "./pages/AddPage"
 import Navigation from "./pages/Navigation"
 import WatchedPage from "./pages/WatchedPage"
 import WatchListPage from './pages/WatchListPage'
+import GlobalProvider from "./context/GlobalState"
+import './index.css'
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <WatchListPage />
+      element: <GlobalProvider>
+        <WatchListPage />
+      </GlobalProvider>
     },
     {
       path: '/add',
-      element: <AddPage />
+      element: <GlobalProvider>
+        <AddPage />
+      </GlobalProvider> 
     },
     {
       path: '/watched',
-      element: <WatchedPage />
+      element: <GlobalProvider>
+        <WatchedPage />
+      </GlobalProvider> 
     },
     {
       path: '/navigation',
-      element: <Navigation />
+      element: <GlobalProvider>
+        <Navigation />
+      </GlobalProvider> 
     }
   ])
 
