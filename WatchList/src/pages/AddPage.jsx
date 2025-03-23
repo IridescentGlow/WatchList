@@ -1,58 +1,52 @@
-import React, { useState } from "react";
-import Navigation from "./Navigation";
-import { ResultCard } from "./ResultCard";
+import React, { useState } from 'react';
+import ResultCard from './ResultCard';
+import Navigation from './Navigation';
 
-const AddPage = () => {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-   
-  const onChange = (event) => {
-    event.preventDefault();
-    setQuery(event.target.value);
+export default function Add () {
+    const [query, setQuery] = useState("");
+    const [results, setResults] = useState([]);
 
-    fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=6cc5a3f023054b5c1b1cda12c20e3c10&language=en-US&page=1&include_adult=false&query=${event.target.value}`
-    ).then((res) => res.json())
-    .then((data) => {
-      if(!data.errors) {
-        setResults(data.results);
-      }else {
-        setResults([]);
-      }
-    })
-  };
+    const onChange = e => {
+        e.preventDefault();
 
-  return (
-    <div>
-      <header>
-        <Navigation />
-      </header>
-      <div className="add-page">
-        <div className="container">
-          <div className="add-content">
-            <div className="input-wrapper">
-              <input
-                type="text"
-                placeholder="Search for a movie"
-                value={query}
-                onChange={onChange}
-              />
+        setQuery(e.target.value);
+
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=6cc5a3f023054b5c1b1cda12c20e3c10&language=en-US&page=1&include_adult=false&query=${e.target.value}`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (!data.errors) {
+                    setResults(data.results);
+                } else {
+                    setResults([]);
+                }
+            });
+    }
+
+    return (
+        <div className="add-page">
+          <header>
+            <Navigation />
+          </header>
+            <div className="container">
+                <div className="add-content">
+                    <div className="input-wrapper">
+                        <input type="text"
+                            placeholder="search movie"
+                            value={query}
+                            onChange={onChange}
+                        />
+                    </div>
+                    {results.length > 0 && (
+                        <ul className="results">
+                            {results.map(movie => (
+                                <li key={movie.title + movie.release_date}>
+                                    <ResultCard movie={movie} />
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
             </div>
-
-            {results.length > 0 && (
-              <ul className="results">
-              {results.map((movie) => (
-                <li key={movie.id}>
-                  <ResultCard movie={movie} />
-                </li>
-              ))}
-            </ul>
-            )}
-          </div>
         </div>
-      </div>
-    </div>
-  );
-};
-
-export default AddPage;
+    );
+}
