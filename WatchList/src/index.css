@@ -22,7 +22,7 @@ body {
 
 
 .container {
-  display: flex;
+  margin-top: 10px;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
