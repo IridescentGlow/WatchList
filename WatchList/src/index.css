@@ -3,6 +3,7 @@
   --secondary: #e0e0e0; /* Light Grey */
   --accent: #333333; /* Medium Grey */
   --white: #ffffff; /* White */
+  --extra: rgb(112, 112, 112);
 }
 
 body {
@@ -21,6 +22,7 @@ body {
 
 
 .container {
+  display: flex;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
@@ -256,7 +258,7 @@ header .nav-links li:last-child {
 }
 
 .movie-card:hover .overlay {
-  border: 3px solid var(--accent);
+  border: 3px solid var(--extra);
 }
 
 .movie-card .inner-card-controls {
